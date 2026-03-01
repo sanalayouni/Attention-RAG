@@ -1,139 +1,168 @@
-# Attention-RAG
-A local Retrieval-Augmented Generation (RAG) chatbot built with Hugging Face embeddings and LLaMA 3 via Ollama, answering questions about the "Attention Is All You Need" paper.
-#  RAG Chatbot – Document-Based QA (Local LLM)
+# 🤖 Attention-RAG
 
-## 🚀 Overview
+> A local Retrieval-Augmented Generation (RAG) chatbot that answers questions about the **"Attention Is All You Need"** paper — powered by HuggingFace embeddings and LLaMA 3 via Ollama. No cloud APIs. No API keys. Just local inference.
 
-This project is a Retrieval-Augmented Generation (RAG) chatbot built for learning purposes.
+---
 
-It allows users to ask questions about the paper:
-**"Attention Is All You Need" (2017)** — the original Transformer architecture paper.
+## 📌 Overview
 
-The chatbot retrieves relevant parts of the document and generates answers using a locally running LLM (no external API calls).
+This project is a hands-on RAG pipeline built for learning purposes. Ask natural language questions about the original 2017 Transformer paper, and the chatbot will retrieve the most relevant context and generate accurate, grounded answers — all running locally on your machine.
+
+**Paper:** *Attention Is All You Need* — Vaswani et al., 2017
 
 ---
 
 ## 🧠 Architecture
 
-This project implements a basic RAG pipeline:
+The pipeline follows a classic RAG pattern:
 
-1. Load and parse the PDF document.
-2. Split the document into smaller chunks.
-3. Generate embeddings using Hugging Face models.
-4. Store embeddings in a vector database.
-5. Retrieve the most relevant chunks based on user queries.
-6. Generate answers using LLaMA 3 running locally via Ollama.
+```
+PDF Document
+    ↓
+Chunk Splitting
+    ↓
+HuggingFace Embeddings
+    ↓
+ChromaDB Vector Store
+    ↓
+Semantic Retrieval (on query)
+    ↓
+LLaMA 3 (via Ollama) → Answer
+```
+
+1. **Load** the PDF document
+2. **Split** it into overlapping text chunks
+3. **Embed** chunks using a HuggingFace sentence transformer
+4. **Store** embeddings in ChromaDB
+5. **Retrieve** the top-k relevant chunks for each user query
+6. **Generate** an answer using LLaMA 3 running locally via Ollama
 
 ---
 
-## 🛠️ Technologies Used
+## 🛠️ Tech Stack
 
-- Python
-- Hugging Face (Embeddings)
-- Ollama (Local LLaMA 3 model)
-- Vector Store ( ChromaDB )
-- PDF processing library
+| Component | Technology |
+|---|---|
+| Language | Python |
+| Embeddings | HuggingFace Sentence Transformers |
+| LLM | LLaMA 3 (via Ollama) |
+| Vector Store | ChromaDB |
+| PDF Parsing | LangChain / PyMuPDF |
 
 ---
 
 ## 🔐 Why Local LLM?
 
-The model runs locally using Ollama, which means:
+Running the model locally with Ollama means:
 
-- No external API dependency
-- No API key required
-- Full control over inference
-- Good for learning LLM architecture
-- More privacy
+- ✅ No external API calls
+- ✅ No API key required
+- ✅ Full control over inference
+- ✅ Better data privacy
+- ✅ Great for learning LLM internals
 
 ---
 
 ## 📂 Project Structure
-rag-chatbot/
+
+```
+Attention-RAG/
 │
-├── main.py
+├── chatbot.py               # Main chatbot entry point
 ├── data/
-│ └── attention_is_all_you_need.pdf
-├── vector_store/
+│   └── attention_is_all_you_need.pdf
+├── vector_store/            # Persisted ChromaDB embeddings
 ├── requirements.txt
 └── README.md
+```
 
+---
 
+## ⚙️ Installation & Setup
 
-
-## ⚙️ Installation
-
-### 1️⃣ Clone the repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/sanalayouni/Attention-RAG.git
-cd RAG chatbot
----
-### 2️⃣ Create a virtual environment
+cd Attention-RAG
+```
+
+### 2. Create a virtual environment
+
 ```bash
 python -m venv venv
-source venv/bin/activate
-###3️⃣ Install dependencies
+source venv/bin/activate        # On Windows: venv\Scripts\activate
+```
+
+### 3. Install dependencies
+
 ```bash
 pip install -r requirements.txt
-###4️⃣ Install and Run Ollama
-Download Ollama from:
-https://ollama.com
+```
 
-Pull LLaMA 3 model:
+### 4. Install and run Ollama
+
+Download Ollama from [https://ollama.com](https://ollama.com), then pull the LLaMA 3 model:
+
+```bash
 ollama pull llama3
+```
 
-Make sure Ollama is running locally before starting the chatbot.
+Make sure Ollama is running in the background before launching the chatbot.
 
-Run the Application:
+### 5. Run the chatbot
+
 ```bash
 python chatbot.py
+```
 
-Then start asking questions about the paper.
+---
 
-Example:
+## 💬 Example Queries
+
+```
 What is the main idea behind self-attention?
-Why are positional encodings necessary?
+Why are positional encodings necessary in the Transformer?
+How does multi-head attention work?
+What are the encoder and decoder components of the Transformer?
+```
 
-###🎯 Features
+---
 
-Document-based question answering
+## 🎯 Features
 
-Local LLM (LLaMA 3)
+- 📄 Document-grounded question answering
+- 🦙 Fully local LLM inference (LLaMA 3 via Ollama)
+- 🔍 Semantic search with vector embeddings
+- 🗄️ Persistent vector store with ChromaDB
+- 🔒 No cloud API usage
 
-Semantic search using embeddings
+---
 
-Lightweight and simple RAG pipeline
+## 📚 What I Learned
 
-No external API usage
+Building this project deepened my understanding of:
 
-###📚 Learning Goals
+- RAG pipeline design and implementation
+- Embeddings and vector similarity search
+- The Transformer architecture (from the source!)
+- Running LLMs locally with Ollama
+- Building AI systems without relying on cloud APIs
 
-This project helped me understand:
+---
 
-RAG architecture
+## 🔮 Roadmap
 
-Embeddings and vector similarity search
+- [ ] Support for multiple documents
+- [ ] Conversational memory across turns
+- [ ] Streamlit web interface
+- [ ] Docker containerization
+- [ ] Evaluation metrics (faithfulness, relevance)
 
-Transformer fundamentals
+---
 
-Running LLMs locally with Ollama
+## 👩‍💻 Author
 
-Building AI systems without cloud APIs
+**Sana Layouni** — Software Engineering Student
 
-###🔮 Future Improvements
-
-Support multiple documents
-
-Add conversational memory
-
-Add Streamlit web interface
-
-Dockerize the application
-
-Add evaluation metrics
-
-###👩‍💻 Author
-
-Sana Layouni
-Software Engineering Student
+[![GitHub](https://img.shields.io/badge/GitHub-sanalayouni-181717?logo=github)](https://github.com/sanalayouni)
